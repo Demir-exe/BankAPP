@@ -41,11 +41,15 @@ public class BankAccountController {
     // TODO: UPDATE BANK ACCOUNT METHOD - DONE !
     @PatchMapping("/{id}")
     public GenericApiResponse updateBankAccount(@PathVariable String id, @RequestBody UpdateBankAccountXAction xAction){
-        BankAccount bankAccount=new BankAccount();
-        bankAccount.setDepositedmoney(xAction.getDepositedmoney());
-        bankAccount.setLinkedcards(xAction.getLinkedcards());
-        bankAccount=bankAccountService.create(bankAccount);
-        return new GenericApiResponse(200,"Success","123123",bankAccount);
+        BankAccount bankAccountInDB= bankAccountService.getById(id);
+        if (  bankAccountInDB== null) {
+            throw new RuntimeException("There is no such bank account");
+        }
+
+        bankAccountInDB.setDepositedmoney(xAction.getDepositedmoney());
+        bankAccountInDB.setLinkedcards(xAction.getLinkedcards());
+        bankAccountInDB=bankAccountService.create(bankAccountInDB);
+        return new GenericApiResponse(200,"Success","123123",bankAccountInDB);
     }
     @GetMapping
     public GenericApiResponse getAllBankAccounts(Pageable pageable) {

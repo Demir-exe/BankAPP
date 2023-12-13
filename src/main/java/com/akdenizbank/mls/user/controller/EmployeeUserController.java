@@ -25,7 +25,7 @@ public class EmployeeUserController {
     public  GenericApiResponse getEmployeeByID(@PathVariable String id){
         EmployeeUser employeeUserInDB=this.employeeUserService.getById(id);
         if (employeeUserInDB == null) {
-            throw new RuntimeException("No such customer");
+            throw new RuntimeException("No such Employee");
         }
         return new GenericApiResponse(200,"Success","123123",employeeUserInDB);
     }
@@ -33,7 +33,7 @@ public class EmployeeUserController {
     public GenericApiResponse updateEmployeeEMail(@PathVariable String id, @RequestBody UpdateEmployeeUserXAction xAction){
         EmployeeUser employeeUserInDB=this.employeeUserService.getById(id);
         if (employeeUserInDB == null) {
-            throw new RuntimeException("No such customer");
+            throw new RuntimeException("No such Employee");
         }
         employeeUserInDB.setEmail(xAction.getEmail());
         employeeUserInDB=employeeUserService.create(employeeUserInDB);
@@ -43,7 +43,7 @@ public class EmployeeUserController {
     public GenericApiResponse deleteEmployee(@PathVariable String id){
         EmployeeUser employeeUserInDB= employeeUserService.getById(id);
         if (employeeUserInDB == null) {
-            throw new RuntimeException("No such customer");
+            throw new RuntimeException("No such Employee");
         }
           this.employeeUserService.delete(id);
         return new GenericApiResponse(200,"Success","123123");

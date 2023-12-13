@@ -1,5 +1,6 @@
 package com.akdenizbank.mls.card.controller;
 
+import com.akdenizbank.mls.xaction.CreateBankCardXAction;
 import com.akdenizbank.mls.xaction.UpdateBankCardXAction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -53,4 +54,15 @@ public class BankCardController {
         return new GenericApiResponse(200, "Success", "34265782");
     }
 
+    @PostMapping("/create")
+    public GenericApiResponse createBankCard(@RequestBody CreateBankCardXAction xAction){
+        BankCard bankCard=new BankCard();
+        bankCard.setNameoncard(xAction.getNameoncard());
+        bankCard.setCvc(xAction.getCvc());
+        bankCard.setCardnumber(xAction.getCardnumber());
+        bankCard.setExpiredate(xAction.getExpiredate());
+        bankCard=this.bankCardService.create(bankCard);
+        return new GenericApiResponse(200,"Success","123123",bankCard);
+
+    }
 }
